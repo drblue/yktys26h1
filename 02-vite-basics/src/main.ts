@@ -103,6 +103,7 @@ const johan: User = {
 }
 */
 
+/*
 interface Todo {
 	id: number;
 	title: string;
@@ -114,3 +115,69 @@ const todos: Todo[] = [
 	{ id: 2, title: "Learn TypeScript", completed: true },
 	{ id: 3, title: "Take over the world", completed: false },
 ];
+*/
+
+// Type Aliases can be assigned to primitive types
+type Tal = number;
+let x: Tal = 42;
+let y: number = 1337;
+
+const sumNum = (a: number, b: number) => a + b;
+sumNum(x, y);
+
+// Type Aliases can also be a union between two (or more types)
+type StringOrNumber = string | number;
+let s: StringOrNumber;
+s = 42;
+s = "forty-two";
+// s = false;
+
+const makeMoreInteresting = (msg: StringOrNumber) => {
+	/*
+	if (typeof msg === "string") {
+		return msg.toLocaleUpperCase() + "!!!!111";
+	}
+
+	return String(msg).toLocaleUpperCase() + "!!!!111";
+	*/
+
+	return (typeof msg === "string")
+		? msg.toLocaleUpperCase() + "!!!!111"
+		: String(msg).toLocaleUpperCase() + "!!!!111";
+}
+console.log(makeMoreInteresting("lolcats are funny"));
+console.log(makeMoreInteresting(1337));
+
+// Inheritance 💰
+interface Animal {
+	name: string;
+}
+
+interface Dog extends Animal {
+	legs: number;
+}
+
+// Two (or more) interfaces with the same name is allowed and merges together
+interface Dog extends Animal {
+	wagsTail: boolean;
+}
+
+const doge: Dog = {
+	name: "Doge",
+	legs: 4,
+	wagsTail: true,
+}
+
+
+type AnimalType = {
+	name: string;
+}
+
+type DogType = AnimalType & {
+	legs: number;
+}
+
+// nope! duplicate identifier
+// type DogType = AnimalType & {
+// 	wagsTail: boolean;
+// }
