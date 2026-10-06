@@ -26,6 +26,60 @@ let todos: Todo[] = [
 ];
 
 /**
+ * Listen for when the new todo form is being submitted
+ */
+newTodoFormEl.addEventListener("submit", (e) => {
+	// 👮🏻‍♂️ Stop form from being submitted
+	e.preventDefault();
+
+	// 💇
+	const newTodoTitle = newTodoTitleEl.value.trim();
+
+	// 🚓
+	if (newTodoTitle.length < 3) {
+		alert("That's too short todo to do, better do it right away instead!");
+		return;
+	}
+
+	// Find the highest ID among all todos
+	/*
+	let maxId = 0;
+	todos.forEach(todo => {
+		if (todo.id > maxId) {
+			maxId = todo.id;
+		}
+	});
+	*/
+	/*
+	const maxId = todos.reduce((maxId, todo) => {
+		if (todo.id > maxId) {
+			return todo.id;
+		}
+		return maxId;
+	}, 0);
+	*/
+	const maxId = Math.max(0, ...todos.map(todo => todo.id));
+
+	// 👶🏻 Create new todo object
+	const newTodo: Todo = {
+		id: maxId + 1,
+		title: newTodoTitle,
+		completed: false,
+	}
+
+	// 🫸🏻 PUSH!
+	todos.push(newTodo);
+
+	// 🎨 Re-render todos
+	renderTodos();
+
+	// 🧹 Empty input field
+	newTodoTitleEl.value = "";
+
+	console.log("Great success!", todos);
+});
+
+/**
  * Render todos to DOM
  */
 const renderTodos = () => {
