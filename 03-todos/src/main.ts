@@ -19,11 +19,23 @@ interface Todo {
 /**
  * Initial state
  */
-let todos: Todo[] = [
-	{ id: 1, title: "🤓 Learn about TypeScript", completed: true },
-	{ id: 2, title: "😇 Take over the world", completed: false },
-	{ id: 3, title: "💰 Profit", completed: false },
-];
+
+// Get JSON of todos from localStorage
+const jsonTodos = localStorage.getItem("todos") ?? "[]";
+
+// Parse JSON into something that we can use in JavaScript
+let todos: Todo[] = JSON.parse(jsonTodos);
+
+/**
+ * Save todos to localStorage
+ */
+const saveTodos = () => {
+	// Get a JSON-representation of the todos-array
+	const jsonTodos = JSON.stringify(todos);
+
+	// Save JSON to localStorage
+	localStorage.setItem("todos", jsonTodos);
+}
 
 /**
  * Listen for when the new todo form is being submitted
@@ -69,6 +81,9 @@ newTodoFormEl.addEventListener("submit", (e) => {
 
 	// 🫸🏻 PUSH!
 	todos.push(newTodo);
+
+	// Save todos 🏊‍♀️🛟
+	saveTodos();
 
 	// 🎨 Re-render todos
 	renderTodos();
