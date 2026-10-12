@@ -93,6 +93,29 @@ todosEl.addEventListener("click", async (e) => {
 		// Edit that todo
 		console.log("Edit that todo");
 
+		// Get closest li's todoId
+		const todoId = Number(target.closest("li")!.dataset.todoId);
+
+		// Find the todo with that id
+		const todo = todos.find(t => t.id === todoId);
+		if (!todo) {
+			return;
+		}
+		console.log("Found todo-object with that id:", todo);
+
+		// Ask user what the new title should be
+		const title = prompt("What's the new title?", todo.title);
+		if (!title || title.length < 3) {
+			// The user got cold feet 🦶🥶 or typed to few characters
+			return;
+		}
+
+		// Update todo title in the API
+		await updateTodo(todoId, { title });
+
+		// Get todos from API
+		getAndRenderTodos();
+
 	} else if (target.dataset.action === "delete") {
 		// Delete that todo
 		console.log("Delete that todo");
