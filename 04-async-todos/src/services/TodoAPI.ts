@@ -17,9 +17,6 @@ export const getTodos = async () => {
 
 /**
  * Create a todo in the API
- *
- * @param payload
- * @returns {Todo}
  */
 export const createTodo = async (payload: CreateTodoPayload) => {
 	const res = await axios.post<Todo>(BASE_URL + "/todos", payload);
