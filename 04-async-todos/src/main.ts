@@ -18,6 +18,17 @@ const newTodoTitleEl = document.querySelector<HTMLInputElement>("#new-todo-title
 let todos: Todo[] = [];
 
 /**
+ * Error handler
+ */
+const handleError = (err: unknown) => {
+	if (err instanceof Error) {
+		alert("Something went wrong: " + err.message);
+	} else {
+		alert("Someone threw something that wasn't an Error. This is why we can't have nice things.");
+	}
+}
+
+/**
  * Get todos from API and render them
  */
 const getAndRenderTodos = async () => {
@@ -29,11 +40,7 @@ const getAndRenderTodos = async () => {
 		renderTodos();
 
 	} catch (err) {
-		if (err instanceof Error) {
-			alert("Something went wrong: " + err.message);
-		} else {
-			alert("Someone threw something that wasn't an Error. This is why we can't have nice things.");
-		}
+		handleError(err);
 	}
 }
 
@@ -71,11 +78,7 @@ newTodoFormEl.addEventListener("submit", async (e) => {
 		console.log("Great success!", todos);
 
 	} catch (err) {
-		if (err instanceof Error) {
-			alert("Something went wrong: " + err.message);
-		} else {
-			alert("Someone threw something that wasn't an Error. This is why we can't have nice things.");
-		}
+		handleError(err);
 	}
 });
 
@@ -110,11 +113,7 @@ todosEl.addEventListener("click", async (e) => {
 			getAndRenderTodos();
 
 		} catch (err) {
-			if (err instanceof Error) {
-				alert("Something went wrong: " + err.message);
-			} else {
-				alert("Someone threw something that wasn't an Error. This is why we can't have nice things.");
-			}
+			handleError(err);
 		}
 
 	} else if (target.dataset.action === "edit") {
@@ -146,11 +145,7 @@ todosEl.addEventListener("click", async (e) => {
 			getAndRenderTodos();
 
 		} catch (err) {
-			if (err instanceof Error) {
-				alert("Something went wrong: " + err.message);
-			} else {
-				alert("Someone threw something that wasn't an Error. This is why we can't have nice things.");
-			}
+			handleError(err);
 		}
 
 	} else if (target.dataset.action === "delete") {
@@ -168,11 +163,7 @@ todosEl.addEventListener("click", async (e) => {
 			getAndRenderTodos();
 
 		} catch (err) {
-			if (err instanceof Error) {
-				alert("Something went wrong: " + err.message);
-			} else {
-				alert("Someone threw something that wasn't an Error. This is why we can't have nice things.");
-			}
+			handleError(err);
 		}
 	}
 });
