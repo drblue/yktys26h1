@@ -24,6 +24,14 @@ export const createTodo = async (payload: CreateTodoPayload) => {
 }
 
 /**
+ * Delete a todo from the API
+ */
+export const deleteTodo = async (id: number) => {
+	await axios.delete(BASE_URL + "/todos/" + id);
+	return true;
+}
+
+/**
  * Get todos from API using fetch
  */
 export const fetchTodos = async () => {
