@@ -21,11 +21,20 @@ let todos: Todo[] = [];
  * Get todos from API and render them
  */
 const getAndRenderTodos = async () => {
-	// Somehow get the todos from the server and update local copy
-	todos = await getTodos();
+	try {
+		// Somehow get the todos from the server and update local copy
+		todos = await getTodos();
 
-	// Render todos
-	renderTodos();
+		// Render todos
+		renderTodos();
+
+	} catch (err) {
+		if (err instanceof Error) {
+			alert("Something went wrong: " + err.message);
+		} else {
+			alert("Someone threw something that wasn't an Error. This is why we can't have nice things.");
+		}
+	}
 }
 
 /**
@@ -49,15 +58,25 @@ newTodoFormEl.addEventListener("submit", async (e) => {
 		title: newTodoTitle,
 		completed: false,
 	}
-	await createTodo(payload);
 
-	// 🎨 Re-render todos
-	await getAndRenderTodos();
+	try {
+		await createTodo(payload);
 
-	// 🧹 Empty input field
-	newTodoTitleEl.value = "";
+		// 🎨 Re-render todos
+		await getAndRenderTodos();
 
-	console.log("Great success!", todos);
+		// 🧹 Empty input field
+		newTodoTitleEl.value = "";
+
+		console.log("Great success!", todos);
+
+	} catch (err) {
+		if (err instanceof Error) {
+			alert("Something went wrong: " + err.message);
+		} else {
+			alert("Someone threw something that wasn't an Error. This is why we can't have nice things.");
+		}
+	}
 });
 
 /**
@@ -83,11 +102,20 @@ todosEl.addEventListener("click", async (e) => {
 		}
 		console.log("Found todo-object with that id:", todo);
 
-		// Toggle todo
-		await updateTodo(todoId, { completed: !todo.completed });
+		try {
+			// Toggle todo
+			await updateTodo(todoId, { completed: !todo.completed });
 
-		// Get todos from API
-		getAndRenderTodos();
+			// Get todos from API
+			getAndRenderTodos();
+
+		} catch (err) {
+			if (err instanceof Error) {
+				alert("Something went wrong: " + err.message);
+			} else {
+				alert("Someone threw something that wasn't an Error. This is why we can't have nice things.");
+			}
+		}
 
 	} else if (target.dataset.action === "edit") {
 		// Edit that todo
@@ -110,11 +138,20 @@ todosEl.addEventListener("click", async (e) => {
 			return;
 		}
 
-		// Update todo title in the API
-		await updateTodo(todoId, { title });
+		try {
+			// Update todo title in the API
+			await updateTodo(todoId, { title });
 
-		// Get todos from API
-		getAndRenderTodos();
+			// Get todos from API
+			getAndRenderTodos();
+
+		} catch (err) {
+			if (err instanceof Error) {
+				alert("Something went wrong: " + err.message);
+			} else {
+				alert("Someone threw something that wasn't an Error. This is why we can't have nice things.");
+			}
+		}
 
 	} else if (target.dataset.action === "delete") {
 		// Delete that todo
@@ -123,12 +160,20 @@ todosEl.addEventListener("click", async (e) => {
 		// Get closest li's todoId
 		const todoId = Number(target.closest("li")!.dataset.todoId);
 
-		// Delete todo
-		await deleteTodo(todoId);
+		try {
+			// Delete todo
+			await deleteTodo(todoId);
 
-		// Get todos from API
-		getAndRenderTodos();
+			// Get todos from API
+			getAndRenderTodos();
 
+		} catch (err) {
+			if (err instanceof Error) {
+				alert("Something went wrong: " + err.message);
+			} else {
+				alert("Someone threw something that wasn't an Error. This is why we can't have nice things.");
+			}
+		}
 	}
 });
 
