@@ -14,6 +14,16 @@
       "id": 3,
       "title": "Have fun making promises",
       "completed": false
+    },
+    {
+      "title": "Learn to <3 TypeScript",
+      "completed": false,
+      "id": 4
+    },
+    {
+      "title": "TypeScript is my 🐐!",
+      "completed": false,
+      "id": 5
     }
   ]
 }

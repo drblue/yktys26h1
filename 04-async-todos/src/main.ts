@@ -1,5 +1,5 @@
-import { getTodos } from "./services/TodoAPI";
-import type { Todo } from "./services/TodoAPI.types";
+import { createTodo, getTodos } from "./services/TodoAPI";
+import type { CreateTodoPayload, Todo } from "./services/TodoAPI.types";
 import "./assets/scss/app.scss";
 
 /**
@@ -29,20 +29,9 @@ const getAndRenderTodos = async () => {
 }
 
 /**
- * Save todos to localStorage
- */
-const saveTodos = () => {
-	// Get a JSON-representation of the todos-array
-	const jsonTodos = JSON.stringify(todos);
-
-	// Save JSON to localStorage
-	localStorage.setItem("todos", jsonTodos);
-}
-
-/**
  * Listen for when the new todo form is being submitted
  */
-newTodoFormEl.addEventListener("submit", (e) => {
+newTodoFormEl.addEventListener("submit", async (e) => {
 	// 👮🏻‍♂️ Stop form from being submitted
 	e.preventDefault();
 
@@ -55,40 +44,15 @@ newTodoFormEl.addEventListener("submit", (e) => {
 		return;
 	}
 
-	// Find the highest ID among all todos
-	/*
-	let maxId = 0;
-	todos.forEach(todo => {
-		if (todo.id > maxId) {
-			maxId = todo.id;
-		}
-	});
-	*/
-	/*
-	const maxId = todos.reduce((maxId, todo) => {
-		if (todo.id > maxId) {
-			return todo.id;
-		}
-		return maxId;
-	}, 0);
-	*/
-	const maxId = Math.max(0, ...todos.map(todo => todo.id));
-
-	// 👶🏻 Create new todo object
-	const newTodo: Todo = {
-		id: maxId + 1,
+	// Create the todo in the API (and wait for the request to be completed)
+	const payload: CreateTodoPayload = {
 		title: newTodoTitle,
 		completed: false,
 	}
-
-	// 🫸🏻 PUSH!
-	todos.push(newTodo);
-
-	// Save todos 🏊‍♀️🛟
-	// saveTodos();
+	await createTodo(payload);
 
 	// 🎨 Re-render todos
-	getAndRenderTodos();
+	await getAndRenderTodos();
 
 	// 🧹 Empty input field
 	newTodoTitleEl.value = "";

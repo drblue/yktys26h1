@@ -3,7 +3,7 @@
  */
 
 import axios from "axios";
-import type { Todo } from "./TodoAPI.types";
+import type { CreateTodoPayload, Todo } from "./TodoAPI.types";
 
 const BASE_URL = "http://localhost:3000";
 
@@ -12,6 +12,17 @@ const BASE_URL = "http://localhost:3000";
  */
 export const getTodos = async () => {
 	const res = await axios.get<Todo[]>(BASE_URL + "/todos");
+	return res.data;
+}
+
+/**
+ * Create a todo in the API
+ *
+ * @param payload
+ * @returns {Todo}
+ */
+export const createTodo = async (payload: CreateTodoPayload) => {
+	const res = await axios.post<Todo>(BASE_URL + "/todos", payload);
 	return res.data;
 }
 
