@@ -1,3 +1,5 @@
+import { fetchTodos } from "./services/TodoAPI";
+import type { Todo } from "./services/TodoAPI.types";
 import "./assets/scss/app.scss";
 
 /**
@@ -7,24 +9,24 @@ const todosEl = document.querySelector<HTMLUListElement>("#todos")!;
 const newTodoFormEl = document.querySelector<HTMLFormElement>("#new-todo-form")!;
 const newTodoTitleEl = document.querySelector<HTMLInputElement>("#new-todo-title")!;
 
-/**
- * Type definitions
- */
-interface Todo {
-	id: number;
-	title: string;
-	completed: boolean;
-}
 
 /**
  * Initial state
  */
 
-// Get JSON of todos from localStorage
-const jsonTodos = localStorage.getItem("todos") ?? "[]";
+// Local copy containing all todos from the server
+let todos: Todo[] = [];
 
-// Parse JSON into something that we can use in JavaScript
-let todos: Todo[] = JSON.parse(jsonTodos);
+/**
+ * Get todos from API and render them
+ */
+const getAndRenderTodos = async () => {
+	// Somehow get the todos from the server and update local copy
+	todos = await fetchTodos();
+
+	// Render todos
+	renderTodos();
+}
 
 /**
  * Save todos to localStorage
@@ -83,10 +85,10 @@ newTodoFormEl.addEventListener("submit", (e) => {
 	todos.push(newTodo);
 
 	// Save todos 🏊‍♀️🛟
-	saveTodos();
+	// saveTodos();
 
 	// 🎨 Re-render todos
-	renderTodos();
+	getAndRenderTodos();
 
 	// 🧹 Empty input field
 	newTodoTitleEl.value = "";
@@ -117,4 +119,4 @@ const renderTodos = () => {
 /**
  * Initialize app
  */
-renderTodos();
+getAndRenderTodos();
