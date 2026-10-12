@@ -12,3 +12,8 @@ export interface CreateTodoPayload {
 	title: string;
 	completed: boolean;
 }
+
+export interface UpdateTodoPayload {
+	title?: string;
+	completed?: boolean;
+}

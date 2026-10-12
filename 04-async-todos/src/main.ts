@@ -1,4 +1,4 @@
-import { createTodo, deleteTodo, getTodos } from "./services/TodoAPI";
+import { createTodo, deleteTodo, getTodos, updateTodo } from "./services/TodoAPI";
 import type { CreateTodoPayload, Todo } from "./services/TodoAPI.types";
 import "./assets/scss/app.scss";
 
@@ -72,6 +72,22 @@ todosEl.addEventListener("click", async (e) => {
 	if (target.tagName === "INPUT") {
 		// Toggle that todo
 		console.log("Toggle that todo");
+
+		// Get closest li's todoId
+		const todoId = Number(target.closest("li")!.dataset.todoId);
+
+		// Find the todo with that id
+		const todo = todos.find(t => t.id === todoId);
+		if (!todo) {
+			return;
+		}
+		console.log("Found todo-object with that id:", todo);
+
+		// Toggle todo
+		await updateTodo(todoId, { completed: !todo.completed });
+
+		// Get todos from API
+		getAndRenderTodos();
 
 	} else if (target.dataset.action === "edit") {
 		// Edit that todo
