@@ -2,9 +2,18 @@
  * All communication with the backend REST-API (`json-server`)
  */
 
+import axios from "axios";
 import type { Todo } from "./TodoAPI.types";
 
 const BASE_URL = "http://localhost:3000";
+
+/**
+ * Get todos from API using axios 🤘🏻🎸
+ */
+export const getTodos = async () => {
+	const res = await axios.get<Todo[]>(BASE_URL + "/todos");
+	return res.data;
+}
 
 /**
  * Get todos from API using fetch
