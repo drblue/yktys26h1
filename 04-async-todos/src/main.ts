@@ -5,6 +5,7 @@ import "./assets/scss/app.scss";
 /**
  * DOM references
  */
+const loadingEl = document.querySelector<HTMLParagraphElement>("#loading")!;
 const todosEl = document.querySelector<HTMLUListElement>("#todos")!;
 const newTodoFormEl = document.querySelector<HTMLFormElement>("#new-todo-form")!;
 const newTodoTitleEl = document.querySelector<HTMLInputElement>("#new-todo-title")!;
@@ -32,6 +33,8 @@ const handleError = (err: unknown) => {
  * Get todos from API and render them
  */
 const getAndRenderTodos = async () => {
+	loadingEl.hidden = false;
+
 	try {
 		// Somehow get the todos from the server and update local copy
 		todos = await getTodos();
@@ -41,6 +44,10 @@ const getAndRenderTodos = async () => {
 
 	} catch (err) {
 		handleError(err);
+
+	} finally {
+		// Hide loading
+		loadingEl.hidden = true;
 	}
 }
 
