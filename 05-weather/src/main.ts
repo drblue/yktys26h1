@@ -1,4 +1,6 @@
 import "./assets/scss/app.scss";
+import { getWeather } from "./services/OWMAPI";
+import type { CurrentWeather } from "./services/OWMAPI.types";
 
 /**
  * DOM references
@@ -11,9 +13,9 @@ const weatherTemperatureEl = document.querySelector<HTMLParagraphElement>("#weat
 const weatherDescriptionEl = document.querySelector<HTMLParagraphElement>("#weather-description")!;
 
 /**
- * Show example weather when the form is submitted
+ * Search for weather when the form is submitted
  */
-searchFormEl.addEventListener("submit", (e) => {
+searchFormEl.addEventListener("submit", async (e) => {
 	e.preventDefault();
 
 	// Get city user wants weather for
@@ -22,8 +24,17 @@ searchFormEl.addEventListener("submit", (e) => {
 		return;
 	}
 
-	weatherCityEl.textContent = city;
-	weatherTemperatureEl.textContent = "12.5 °C";
-	weatherDescriptionEl.textContent = "Black with green characters raining";
-	weatherEl.hidden = false;
+	// Call API and request current weather
+	const weather = await getWeather(city);
+	renderWeather(weather);
 });
+
+/**
+ * Render the current weather returned by the API
+ */
+const renderWeather = (weather: CurrentWeather) => {
+	weatherCityEl.textContent = weather.name;
+	weatherTemperatureEl.textContent = weather.main.temp + " °C";
+	weatherDescriptionEl.textContent = weather.weather[0]?.description ?? "Unknown weather";
+	weatherEl.hidden = false;
+}
