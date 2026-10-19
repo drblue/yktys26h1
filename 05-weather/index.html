@@ -8,7 +8,28 @@
 </head>
 <body>
 	<div id="app" class="container py-3">
-		<h1>Weather</h1>
+		<h1 class="mb-3">Weather</h1>
+
+		<form id="search-form" class="mb-4">
+			<label for="city" class="form-label">City</label>
+			<div class="input-group">
+				<input
+					class="form-control"
+					type="text"
+					name="city"
+					id="city"
+					placeholder="Gotham City"
+					required
+				>
+				<button class="btn btn-primary" type="submit">Search</button>
+			</div>
+		</form>
+
+		<section id="weather" aria-live="polite" hidden>
+			<h2 id="weather-city">Gotham City</h2>
+			<p id="weather-temp" class="fs-2 mb-1">13.37 °C</p>
+			<p id="weather-description">Dark, foggy and lots of crime</p>
+		</section>
 	</div>
 	<script type="module" src="/src/main.ts"></script>
 </body>
