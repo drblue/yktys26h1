@@ -5,6 +5,10 @@
 /**
  * OpenWeatherMap fields used by this app
  */
+export interface Percipitation {
+	"1h": number;
+}
+
 export interface CurrentWeather {
 	name: string;
 	main: {
@@ -15,7 +19,9 @@ export interface CurrentWeather {
 	}[];
 	sys: {
 		country: string;
-	}
+	};
+	rain?: Percipitation;
+	snow?: Percipitation;
 }
 
 /**
