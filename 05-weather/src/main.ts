@@ -28,14 +28,31 @@ searchFormEl.addEventListener("submit", async (e) => {
 	}
 
 	// Set loading state
+	errorEl.hidden = true;
 	loadingEl.hidden = false;
 	searchButtonEl.disabled = true;
 	weatherEl.hidden = true;
 
 	// Call API and request current weather
-	const weather = await getWeather(city);
-	renderWeather(weather);
+	const result = await getWeather(city);
+//        ^?
 
+	if (result.status === "error") {
+		// `result` has been narrowed to `WeatherResultError`
+		// Set error message, show error, hide loading, enable button
+		errorEl.textContent = result.message;
+//                        ^?
+		errorEl.hidden = false;
+		loadingEl.hidden = true;
+		searchButtonEl.disabled = false;
+		return;
+	}
+
+	// `result` has been narrowed to `WeatherResultSuccess`
+	renderWeather(result.data);
+
+	// Clear input, hide loading, enable button, show weather
+	cityEl.value = "";
 	loadingEl.hidden = true;
 	searchButtonEl.disabled = false;
 	weatherEl.hidden = false;

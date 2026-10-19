@@ -2,6 +2,9 @@
  * OpenWeatherMap types
  */
 
+/**
+ * OpenWeatherMap fields used by this app
+ */
 export interface CurrentWeather {
 	name: string;
 	main: {
@@ -14,3 +17,18 @@ export interface CurrentWeather {
 		country: string;
 	}
 }
+
+/**
+ * The app's own result-type
+ */
+export interface WeatherResultSuccess {
+	status: "success";
+	data: CurrentWeather;
+}
+
+export interface WeatherResultError {
+	status: "error";
+	message: string;
+}
+
+export type WeatherResult = WeatherResultSuccess | WeatherResultError;
