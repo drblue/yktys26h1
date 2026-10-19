@@ -21,9 +21,12 @@
 					placeholder="Gotham City"
 					required
 				>
-				<button class="btn btn-primary" type="submit">Search</button>
+				<button class="btn btn-primary" id="search-button" type="submit">Search</button>
 			</div>
 		</form>
+
+		<p id="loading" role="status" hidden>Asking Weather-Batman for current weather</p>
+		<div id="error" class="alert alert-danger" role="alert" hidden></div>
 
 		<section id="weather" aria-live="polite" hidden>
 			<h2 id="weather-city">Gotham City</h2>

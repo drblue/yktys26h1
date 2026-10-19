@@ -26,5 +26,8 @@ export const getWeather = async (city: string) => {
 		},
 	});
 
+	// Fake a slow API
+	await new Promise(r => setTimeout(r, 1500));
+
 	return res.data;
 }

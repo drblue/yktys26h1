@@ -7,6 +7,9 @@ import type { CurrentWeather } from "./services/OWMAPI.types";
  */
 const searchFormEl = document.querySelector<HTMLFormElement>("#search-form")!;
 const cityEl = document.querySelector<HTMLInputElement>("#city")!;
+const errorEl = document.querySelector<HTMLDivElement>("#error")!;
+const loadingEl = document.querySelector<HTMLParagraphElement>("#loading")!;
+const searchButtonEl = document.querySelector<HTMLButtonElement>("#search-button")!;
 const weatherEl = document.querySelector<HTMLElement>("#weather")!;
 const weatherCityEl = document.querySelector<HTMLHeadingElement>("#weather-city")!;
 const weatherTemperatureEl = document.querySelector<HTMLParagraphElement>("#weather-temp")!;
@@ -24,9 +27,18 @@ searchFormEl.addEventListener("submit", async (e) => {
 		return;
 	}
 
+	// Set loading state
+	loadingEl.hidden = false;
+	searchButtonEl.disabled = true;
+	weatherEl.hidden = true;
+
 	// Call API and request current weather
 	const weather = await getWeather(city);
 	renderWeather(weather);
+
+	loadingEl.hidden = true;
+	searchButtonEl.disabled = false;
+	weatherEl.hidden = false;
 });
 
 /**
