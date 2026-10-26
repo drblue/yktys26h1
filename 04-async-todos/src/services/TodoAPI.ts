@@ -45,7 +45,7 @@ const get = async <T>(endpoint: string): Promise<APIResult<T>> => {
 /**
  * Make a generic HTTP POST request
  */
-const post = async <Response, Payload>(endpoint: string, payload: Payload): Promise<APIResult<Response>> => {
+const post = async <Response, Payload = unknown>(endpoint: string, payload: Payload): Promise<APIResult<Response>> => {
 	try {
 		const res = await axios.post<Response>(endpoint, payload);
 		return success(res.data);
@@ -73,7 +73,7 @@ export const getTodos = async () => {
  * Create a todo in the API
  */
 export const createTodo = async (payload: CreateTodoPayload) => {
-	return post<Todo, CreateTodoPayload>(BASE_URL + "/todos", payload);
+	return post<Todo>(BASE_URL + "/todos", payload);
 }
 
 /**
