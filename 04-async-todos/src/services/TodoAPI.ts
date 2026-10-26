@@ -7,6 +7,15 @@ import type { APIErrorResult, APIResult, APISuccessResult, CreateTodoPayload, To
 
 const BASE_URL = "http://localhost:3000";
 
+// Create a new axios instance
+const http = axios.create({
+	baseURL: BASE_URL,
+	headers: {
+		"Accept": "application/json",
+	},
+	timeout: 10000,  // 10 seconds
+});
+
 /**
  * Build success-result
  */
@@ -34,7 +43,7 @@ const error = (err: unknown): APIErrorResult => {
  */
 const get = async <T>(endpoint: string): Promise<APIResult<T>> => {
 	try {
-		const res = await axios.get<T>(endpoint);
+		const res = await http.get<T>(endpoint);
 		return success(res.data);
 
 	} catch (err) {
@@ -47,7 +56,7 @@ const get = async <T>(endpoint: string): Promise<APIResult<T>> => {
  */
 const post = async <Response, Payload = unknown>(endpoint: string, payload: Payload): Promise<APIResult<Response>> => {
 	try {
-		const res = await axios.post<Response>(endpoint, payload);
+		const res = await http.post<Response>(endpoint, payload);
 		return success(res.data);
 
 	} catch (err) {
@@ -59,28 +68,28 @@ const post = async <Response, Payload = unknown>(endpoint: string, payload: Payl
  * Get a single todo from the API
  */
 export const getTodo = async (id: number) => {
-	return get<Todo>(BASE_URL + "/todos/" + id);
+	return get<Todo>("/todos/" + id);
 }
 
 /**
  * Get todos from API using axios 🤘🏻🎸
  */
 export const getTodos = async () => {
-	return get<Todo[]>(BASE_URL + "/todos");
+	return get<Todo[]>("/todos");
 }
 
 /**
  * Create a todo in the API
  */
 export const createTodo = async (payload: CreateTodoPayload) => {
-	return post<Todo>(BASE_URL + "/todos", payload);
+	return post<Todo>("/todos", payload);
 }
 
 /**
  * Update a todo in the API
  */
 export const updateTodo = async (id: number, payload: UpdateTodoPayload) => {
-	const res = await axios.patch<Todo>(BASE_URL + "/todos/" + id, payload);
+	const res = await http.patch<Todo>("/todos/" + id, payload);
 	return res.data;
 }
 
@@ -88,9 +97,15 @@ export const updateTodo = async (id: number, payload: UpdateTodoPayload) => {
  * Delete a todo from the API
  */
 export const deleteTodo = async (id: number) => {
-	await axios.delete(BASE_URL + "/todos/" + id);
+	await http.delete("/todos/" + id);
 	return true;
 }
+
+/***********************************************
+ *
+ * 🐉🐲 BEWARE OF DRAGONS 🐲🐉
+ *
+ ***********************************************/
 
 /**
  * Get todos from API using fetch

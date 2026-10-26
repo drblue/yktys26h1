@@ -24,6 +24,11 @@
       "title": "TypeScript is my 🐐!",
       "completed": false,
       "id": 5
+    },
+    {
+      "title": "Generics are like having a superhero in your pocket 🦸🏻!",
+      "completed": false,
+      "id": 6
     }
   ]
 }
