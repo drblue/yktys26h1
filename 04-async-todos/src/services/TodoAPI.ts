@@ -8,11 +8,11 @@ import type { APIResult, CreateTodoPayload, Todo, UpdateTodoPayload } from "./To
 const BASE_URL = "http://localhost:3000";
 
 /**
- * Get todos from API using axios 🤘🏻🎸
+ * Make a generic HTTP GET request
  */
-export const getTodos = async (): Promise<APIResult<Todo[]>> => {
+export const get = async <T>(endpoint: string): Promise<APIResult<T>> => {
 	try {
-		const res = await axios.get<Todo[]>(BASE_URL + "/todos");
+		const res = await axios.get<T>(endpoint);
 		return {
 			status: "success",
 			data: res.data,
@@ -26,6 +26,20 @@ export const getTodos = async (): Promise<APIResult<Todo[]>> => {
 				: "Something went wrong. Try again?",
 		}
 	}
+}
+
+/**
+ * Get a single todo from the API
+ */
+export const getTodo = async (id: number) => {
+	return get<Todo>(BASE_URL + "/todos/" + id);
+}
+
+/**
+ * Get todos from API using axios 🤘🏻🎸
+ */
+export const getTodos = async () => {
+	return get<Todo[]>(BASE_URL + "/todos");
 }
 
 /**
