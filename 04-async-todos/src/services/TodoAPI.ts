@@ -3,9 +3,31 @@
  */
 
 import axios from "axios";
-import type { APIResult, CreateTodoPayload, Todo, UpdateTodoPayload } from "./TodoAPI.types";
+import type { APIErrorResult, APIResult, APISuccessResult, CreateTodoPayload, Todo, UpdateTodoPayload } from "./TodoAPI.types";
 
 const BASE_URL = "http://localhost:3000";
+
+/**
+ * Build success-result
+ */
+const success = <T>(data: T): APISuccessResult<T> => {
+	return {
+		status: "success",
+		data,  // data: data
+	}
+}
+
+/**
+ * Build error-result
+ */
+const error = (err: unknown): APIErrorResult => {
+	return {
+		status: "error",
+		message: (err instanceof Error)
+			? err.message
+			: "Something went wrong. Try again?",
+	}
+}
 
 /**
  * Make a generic HTTP GET request
@@ -13,18 +35,10 @@ const BASE_URL = "http://localhost:3000";
 export const get = async <T>(endpoint: string): Promise<APIResult<T>> => {
 	try {
 		const res = await axios.get<T>(endpoint);
-		return {
-			status: "success",
-			data: res.data,
-		}
+		return success(res.data);
 
 	} catch (err) {
-		return {
-			status: "error",
-			message: (err instanceof Error)
-				? err.message
-				: "Something went wrong. Try again?",
-		}
+		return error(err);
 	}
 }
 

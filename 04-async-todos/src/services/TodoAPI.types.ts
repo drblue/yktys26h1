@@ -3,12 +3,12 @@
  */
 
 // Generic type that accepts a type-argument and uses it to type `data`
-interface APISuccessResult<T> {
+export interface APISuccessResult<T> {
 	status: "success";
 	data: T;
 }
 
-interface APIErrorResult {
+export interface APIErrorResult {
 	status: "error";
 	message: string;
 }
