@@ -74,9 +74,9 @@ newTodoFormEl.addEventListener("submit", async (e) => {
 		completed: false,
 	}
 
-	try {
-		await createTodo(payload);
+	const res = await createTodo(payload);
 
+	if (res.status === "success") {
 		// 🎨 Re-render todos
 		await getAndRenderTodos();
 
@@ -84,9 +84,8 @@ newTodoFormEl.addEventListener("submit", async (e) => {
 		newTodoTitleEl.value = "";
 
 		console.log("Great success!", todos);
-
-	} catch (err) {
-		handleError(err);
+	} else {
+		alert(res.message);
 	}
 });
 

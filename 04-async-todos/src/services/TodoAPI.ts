@@ -32,9 +32,22 @@ const error = (err: unknown): APIErrorResult => {
 /**
  * Make a generic HTTP GET request
  */
-export const get = async <T>(endpoint: string): Promise<APIResult<T>> => {
+const get = async <T>(endpoint: string): Promise<APIResult<T>> => {
 	try {
 		const res = await axios.get<T>(endpoint);
+		return success(res.data);
+
+	} catch (err) {
+		return error(err);
+	}
+}
+
+/**
+ * Make a generic HTTP POST request
+ */
+const post = async <Response, Payload>(endpoint: string, payload: Payload): Promise<APIResult<Response>> => {
+	try {
+		const res = await axios.post<Response>(endpoint, payload);
 		return success(res.data);
 
 	} catch (err) {
@@ -60,8 +73,7 @@ export const getTodos = async () => {
  * Create a todo in the API
  */
 export const createTodo = async (payload: CreateTodoPayload) => {
-	const res = await axios.post<Todo>(BASE_URL + "/todos", payload);
-	return res.data;
+	return post<Todo, CreateTodoPayload>(BASE_URL + "/todos", payload);
 }
 
 /**
