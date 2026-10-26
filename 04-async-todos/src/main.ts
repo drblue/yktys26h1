@@ -35,20 +35,21 @@ const handleError = (err: unknown) => {
 const getAndRenderTodos = async () => {
 	loadingEl.hidden = false;
 
-	try {
-		// Somehow get the todos from the server and update local copy
-		todos = await getTodos();
+	// Somehow get the todos from the server and update local copy
+	const res = await getTodos();
+
+	if (res.status === "success") {
+		todos = res.data;
 
 		// Render todos
 		renderTodos();
-
-	} catch (err) {
-		handleError(err);
-
-	} finally {
-		// Hide loading
-		loadingEl.hidden = true;
+	} else {
+		alert(res.message);
+		return;
 	}
+
+	// Hide loading
+	loadingEl.hidden = true;
 }
 
 /**

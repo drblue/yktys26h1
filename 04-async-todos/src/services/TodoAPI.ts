@@ -3,16 +3,29 @@
  */
 
 import axios from "axios";
-import type { CreateTodoPayload, Todo, UpdateTodoPayload } from "./TodoAPI.types";
+import type { APIResult, CreateTodoPayload, Todo, UpdateTodoPayload } from "./TodoAPI.types";
 
 const BASE_URL = "http://localhost:3000";
 
 /**
  * Get todos from API using axios 🤘🏻🎸
  */
-export const getTodos = async () => {
-	const res = await axios.get<Todo[]>(BASE_URL + "/todos");
-	return res.data;
+export const getTodos = async (): Promise<APIResult<Todo[]>> => {
+	try {
+		const res = await axios.get<Todo[]>(BASE_URL + "/todos");
+		return {
+			status: "success",
+			data: res.data,
+		}
+
+	} catch (err) {
+		return {
+			status: "error",
+			message: (err instanceof Error)
+				? err.message
+				: "Something went wrong. Try again?",
+		}
+	}
 }
 
 /**
