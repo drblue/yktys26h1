@@ -1,0 +1,13 @@
+# React Todos
+
+Detta är en "clean" Vite React TypeScript-app.
+
+## Skapa från grunden
+
+Om du vill skapa den här appen själv från grunden så kan du köra följande kommandon:
+
+```bash
+npm create vite@latest 06-react-todos -- --template react-ts
+cd 06-react-todos
+npm install
+```
