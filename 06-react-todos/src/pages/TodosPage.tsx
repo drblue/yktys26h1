@@ -12,14 +12,19 @@ const TodosPage = () => {
 		{ id: 1, title: "Learn TypeScript", completed: true },
 		{ id: 2, title: "Try React", completed: false },
 	]);
+	const trimmedTitle = inputTitle.trim();
 
 	const handleSubmit = (e: React.SubmitEvent) => {
 		e.preventDefault();
-		console.log(`Will create todo with title '${inputTitle}'`);
+		console.log(`Will create todo with title '${trimmedTitle}'`);
+
+		if (trimmedTitle.length < 3) {
+			return;
+		}
 
 		const newTodo: Todo = {
 			id: Math.max(0, ...todos.map(todo => todo.id)) + 1,
-			title: inputTitle,
+			title: trimmedTitle,
 			completed: false,
 		}
 		setTodos(prevTodos => [...prevTodos, newTodo]);
@@ -35,12 +40,13 @@ const TodosPage = () => {
 					<Form.Control
 						aria-label="Todo title"
 						onChange={e => setInputTitle(e.target.value)}
-						minLength={2}
+						minLength={3}
 						placeholder="Buy glutenfree bread"
 						value={inputTitle}
 						required
 					/>
 					<Button
+						disabled={trimmedTitle.length < 3}
 						type="submit"
 						variant="success"
 					>Create</Button>
