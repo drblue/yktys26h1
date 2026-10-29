@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
+import TodoListItem from "../components/TodoListItem";
 import type { Todo } from "../services/TodoAPI.types";
 
 const TodosPage = () => {
@@ -29,12 +30,7 @@ const TodosPage = () => {
 
 			<ListGroup className="todolist">
 				{todos.map(todo => (
-					<ListGroup.Item
-						className={todo.completed ? "todo done" : "todo"}
-						key={todo.id}
-					>
-						<span className="todo-title">{todo.title}</span>
-					</ListGroup.Item>
+					<TodoListItem key={todo.id} todo={todo} />
 				))}
 			</ListGroup>
 		</>
