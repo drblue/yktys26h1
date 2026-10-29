@@ -1,6 +1,13 @@
 # React Todos
 
-Detta är en "clean" Vite React TypeScript-app.
+Detta är en "clean" Vite React TypeScript-app där jag lagt in följande paket:
+
+- Axios
+- Bootstrap
+- JSON Server
+- React Bootstrap
+- React Router
+- SASS
 
 ## Skapa från grunden
 
@@ -9,5 +16,21 @@ Om du vill skapa den här appen själv från grunden så kan du köra följande 
 ```bash
 npm create vite@latest 06-react-todos -- --template react-ts
 cd 06-react-todos
-npm install
+npm install axios react-router react-bootstrap
+npm install -D bootstrap json-server@^0.17.4
+npm install -D -E sass@1.77.6
+```
+
+Skapa/ändra sedan enligt filerna i `denna` commit.
+
+## Starta appen
+
+```bash
+npm run dev
+```
+
+## Starta server
+
+```bash
+npm run server
 ```
