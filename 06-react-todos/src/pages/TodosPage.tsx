@@ -6,6 +6,7 @@ import { createTodo, getTodos, updateTodo } from "../services/TodoAPI";
 import type { Todo } from "../services/TodoAPI.types";
 import AddTodoForm from "../components/AddTodoForm";
 import TodoSummary from "../components/TodoSummary";
+import ErrorAlert from "../components/ErrorAlert";
 
 const TodosPage = () => {
 	const [error, setError] = useState<string | null>(null);
@@ -93,6 +94,19 @@ const TodosPage = () => {
 	return (
 		<>
 			<h1 className="mb-3">Todos</h1>
+
+			<ErrorAlert>
+				<p>This is an error</p>
+			</ErrorAlert>
+
+			<ErrorAlert>
+				<p>This is another error!!</p>
+			</ErrorAlert>
+
+			<ErrorAlert>
+				<h2>OMG YET ANOTHER ERROR; wh000t?!</h2>
+				<img src="https://media.tenor.com/U5hmONvZGo8AAAAM/mmt-error-error.gif" className="img-fluid" />
+			</ErrorAlert>
 
 			<AddTodoForm onAdd={handleAddTodo} />
 
