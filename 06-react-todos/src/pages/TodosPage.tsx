@@ -2,24 +2,34 @@ import { useEffect, useState } from "react";
 import Alert from "react-bootstrap/Alert";
 import ListGroup from "react-bootstrap/ListGroup";
 import TodoListItem from "../components/TodoListItem";
+import { createTodo, getTodos } from "../services/TodoAPI";
 import type { Todo } from "../services/TodoAPI.types";
 import AddTodoForm from "../components/AddTodoForm";
 import TodoSummary from "../components/TodoSummary";
-import { getTodos } from "../services/TodoAPI";
 
 const TodosPage = () => {
 	const [error, setError] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [todos, setTodos] = useState<Todo[] | null>(null);
 
-	const handleAddTodo = (title: string) => {
-		console.log("handleAddTodo invoked, title is:", title);
-		const newTodo: Todo = {
-			id: Math.max(0, ...(todos ?? []).map(todo => todo.id)) + 1,
-			title,  // title: title
+	const handleAddTodo = async (title: string) => {
+		// reset error-state
+		setError(null);
+
+		// Create todo using API service
+		const result = await createTodo({
+			title,
 			completed: false,
+		});
+
+		// If error, set error message and return
+		if (result.status === "error") {
+			setError(result.message);
+			return;
 		}
-		setTodos(prevTodos => [...(prevTodos ?? []), newTodo]);
+
+		// If success, update todos-state with the new todo
+		setTodos(prevTodos => [...(prevTodos ?? []), result.data]);
 	}
 
 	useEffect(() => {
