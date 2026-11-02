@@ -3,6 +3,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import TodoListItem from "../components/TodoListItem";
 import type { Todo } from "../services/TodoAPI.types";
 import AddTodoForm from "../components/AddTodoForm";
+import TodoSummary from "../components/TodoSummary";
 
 const TodosPage = () => {
 	const [todos, setTodos] = useState<Todo[]>([
@@ -28,11 +29,13 @@ const TodosPage = () => {
 
 			<AddTodoForm onAdd={handleAddTodo} />
 
-			<ListGroup className="todolist">
+			<ListGroup className="todolist mb-2">
 				{todos.map(todo => (
 					<TodoListItem key={todo.id} todo={todo} />
 				))}
 			</ListGroup>
+
+			<TodoSummary todos={todos} />
 		</>
 	);
 };

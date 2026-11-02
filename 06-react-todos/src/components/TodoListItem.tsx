@@ -8,7 +8,7 @@ interface TodoListItemProps {
 const TodoListItem = ({ todo }: TodoListItemProps) => {
 	return (
 		<ListGroup.Item
-			// className={todo.completed ? "todo done" : "todo"}
+			className={todo.completed ? "todo done" : "todo"}
 		>
 			<span className="todo-title">{todo.title}</span>
 		</ListGroup.Item>
