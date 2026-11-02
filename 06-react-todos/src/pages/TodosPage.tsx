@@ -23,6 +23,8 @@ const TodosPage = () => {
 	}
 
 	useEffect(() => {
+		let ignore = false;
+
 		const loadTodos = async () => {
 			// set loading to true
 			setIsLoading(true);
@@ -31,6 +33,10 @@ const TodosPage = () => {
 
 			// Get todos from API service
 			const result = await getTodos();
+
+			if (ignore) {
+				return;
+			}
 
 			// Check result
 			if (result.status === "success") {
@@ -43,6 +49,10 @@ const TodosPage = () => {
 			setIsLoading(false);
 		}
 		void loadTodos();
+
+		return () => {
+			ignore = true;
+		}
 	}, []);
 
 	console.log("TodosPage is rendering...");
