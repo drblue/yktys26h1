@@ -37,6 +37,7 @@ const AddTodoForm = ({ onAdd }: AddTodoFormProps) => {
 					value={inputTitle}
 					required
 				/>
+				<InputGroup.Text>{trimmedTitle.length} chars</InputGroup.Text>
 				<Button
 					disabled={trimmedTitle.length < 3}
 					type="submit"
