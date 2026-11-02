@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Alert from "react-bootstrap/Alert";
 import ListGroup from "react-bootstrap/ListGroup";
 import TodoListItem from "../components/TodoListItem";
-import { createTodo, getTodos } from "../services/TodoAPI";
+import { createTodo, getTodos, updateTodo } from "../services/TodoAPI";
 import type { Todo } from "../services/TodoAPI.types";
 import AddTodoForm from "../components/AddTodoForm";
 import TodoSummary from "../components/TodoSummary";
@@ -30,6 +30,29 @@ const TodosPage = () => {
 
 		// If success, update todos-state with the new todo
 		setTodos(prevTodos => [...(prevTodos ?? []), result.data]);
+	}
+
+	const handleToggleTodo = async (todo: Todo) => {
+		// reset error-state
+		setError(null);
+
+		// Update todo using API service
+		const result = await updateTodo(todo.id, {
+			completed: !todo.completed,
+		});
+
+		// If error, set error message and return
+		if (result.status === "error") {
+			setError(result.message);
+			return;
+		}
+
+		// If success, update todos-state and replace the old todo with the updated version
+		setTodos(prevTodos => (prevTodos ?? []).map(item =>
+			item.id === result.data.id   // 2 === 2
+				? result.data
+				: item
+		));
 	}
 
 	useEffect(() => {
@@ -81,7 +104,7 @@ const TodosPage = () => {
 				<>
 					<ListGroup className="todolist mb-2">
 						{todos.map(todo => (
-							<TodoListItem key={todo.id} todo={todo} />
+							<TodoListItem key={todo.id} onToggle={handleToggleTodo} todo={todo} />
 						))}
 					</ListGroup>
 

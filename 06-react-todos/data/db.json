@@ -17,13 +17,18 @@
     },
     {
       "title": "Do all the todos",
-      "completed": false,
+      "completed": true,
       "id": 4
     },
     {
       "title": "Don't do any todos",
       "completed": false,
       "id": 5
+    },
+    {
+      "title": "This is my todo and I like it",
+      "completed": false,
+      "id": 6
     }
   ]
 }

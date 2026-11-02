@@ -65,6 +65,19 @@ const post = async <Response, Payload = unknown>(endpoint: string, payload: Payl
 }
 
 /**
+ * Make a generic HTTP PATCH request
+ */
+const patch = async <Response, Payload = unknown>(endpoint: string, payload: Payload): Promise<APIResult<Response>> => {
+	try {
+		const res = await http.patch<Response>(endpoint, payload);
+		return success(res.data);
+
+	} catch (err) {
+		return error(err);
+	}
+}
+
+/**
  * Get a single todo from the API
  */
 export const getTodo = async (id: number) => {
@@ -89,8 +102,7 @@ export const createTodo = async (payload: CreateTodoPayload) => {
  * Update a todo in the API
  */
 export const updateTodo = async (id: number, payload: UpdateTodoPayload) => {
-	const res = await http.patch<Todo>("/todos/" + id, payload);
-	return res.data;
+	return patch<Todo>("/todos/" + id, payload);
 }
 
 /**
