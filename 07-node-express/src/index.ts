@@ -1,5 +1,5 @@
 import express from "express";
-import type { Todo } from "./types/Todo.types.ts";
+import { todosRouter } from "./routes/todos.router.ts";
 
 const PORT = Number(process.env.PORT ?? 3001);
 const app = express();
@@ -9,16 +9,8 @@ app.get("/", (_req, res) => {
 	res.json({ message: "Hello from Express!" });
 });
 
-const todos: Todo[] = [
-	{ id: 1, title: "Learn TypeScript", completed: true },
-	{ id: 2, title: "Learn React", completed: true },
-	{ id: 3, title: "Learn Node.js", completed: false },
-];
-
-// Respond to GET /todos requests
-app.get("/todos", (_req, res) => {
-	res.json(todos);
-});
+// Use the todos router
+app.use("/todos", todosRouter);
 
 // Listen for incoming requests
 app.listen(PORT, () => {
