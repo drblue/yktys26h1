@@ -1,10 +1,5 @@
 import express from "express";
-
-interface Todo {
-	id: number;
-	title: string;
-	completed: boolean;
-}
+import type { Todo } from "./types/Todo.types.ts";
 
 const PORT = Number(process.env.PORT ?? 3001);
 const app = express();
