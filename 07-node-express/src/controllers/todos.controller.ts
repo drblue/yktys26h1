@@ -18,7 +18,7 @@ export const getTodos = async (_req: Request, res: Response) => {
 }
 
 // Get a single todo
-export const getTodo = async (req: Request, res: Response) => {
+export const getTodo = async (req: Request<{ id: string }>, res: Response) => {
 	const id = Number(req.params.id);
 	const todo = await todosService.getTodo(id);
 
