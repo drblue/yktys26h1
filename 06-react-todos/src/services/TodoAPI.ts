@@ -1,11 +1,11 @@
 /**
- * All communication with the backend REST-API (`json-server`)
+ * All communication with the backend REST-API (Express)
  */
 
 import axios from "axios";
 import type { APIErrorResult, APIResult, APISuccessResult, CreateTodoPayload, Todo, UpdateTodoPayload } from "./TodoAPI.types";
 
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "http://localhost:3001";
 
 // Create a new axios instance
 const http = axios.create({

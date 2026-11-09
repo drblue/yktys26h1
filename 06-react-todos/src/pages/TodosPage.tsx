@@ -95,6 +95,7 @@ const TodosPage = () => {
 		<>
 			<h1 className="mb-3">Todos</h1>
 
+			{/*
 			<ErrorAlert>
 				<p>This is an error</p>
 			</ErrorAlert>
@@ -107,6 +108,7 @@ const TodosPage = () => {
 				<h2>OMG YET ANOTHER ERROR; wh000t?!</h2>
 				<img src="https://media.tenor.com/U5hmONvZGo8AAAAM/mmt-error-error.gif" className="img-fluid" />
 			</ErrorAlert>
+			*/}
 
 			<AddTodoForm onAdd={handleAddTodo} />
 
