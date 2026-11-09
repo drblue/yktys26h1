@@ -1,5 +1,15 @@
 import type { Request, Response } from "express";
 import * as todosService from "../services/todos.service.ts";
+import type { CreateTodoPayload } from "../types/Todo.types.ts";
+
+// Type Guard that validates if something is of CreateTodoPayload type
+const isCreateTodoPayload = (body: unknown): body is CreateTodoPayload => {
+	return (
+		typeof body === "object" && body !== null &&
+		"title" in body && typeof body.title === "string" &&
+		"completed" in body && typeof body.completed === "boolean"
+	)
+}
 
 // Get all todos
 export const getTodos = async (_req: Request, res: Response) => {
@@ -28,19 +38,16 @@ export const createTodo = async (req: Request, res: Response) => {
 	const body: unknown = req.body;
 
 	// Check that incoming data is valid
-	if (
-		typeof body !== "object" || body === null ||
-		!("title" in body) || typeof body.title !== "string" ||
-		!("completed" in body) || typeof body.completed !== "boolean"
-	) {
+	if (!isCreateTodoPayload(body)) {
 		res.status(400).json({ message: "Expected a title and a completed flag." });
 		return;
 	}
 
-	// Now we know that `body` has `title: string` and `completed: boolean`
+	// Now we know that `body` is of type `CreateTodoPayload`
 
 	// Check if title is at least 3 characters long
 	const title = body.title.trim();
+ //             ^?
 	if (title.length < 3) {
 		res.status(400).json({ message: "Title must have at least 3 characters." });
 		return;
