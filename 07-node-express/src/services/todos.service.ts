@@ -11,3 +11,8 @@ export const getTodos = async (): Promise<Todo[]> => {
 	// Would make a request to the database (if we had any)
 	return todos;
 }
+
+// Find a single todo
+export const getTodo = async (id: number): Promise<Todo | undefined> => {
+	return todos.find(todo => todo.id === id);
+}
