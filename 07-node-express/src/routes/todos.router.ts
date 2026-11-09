@@ -1,5 +1,5 @@
 import express from "express";
-import { getTodo, getTodos } from "../controllers/todos.controller.ts";
+import { createTodo, getTodo, getTodos } from "../controllers/todos.controller.ts";
 
 // Create a router
 export const todosRouter = express.Router();
@@ -10,3 +10,6 @@ todosRouter.get("/", getTodos);
 
 // Respond to GET /todos/:id requests
 todosRouter.get("/:id", getTodo);
+
+// Respond to POST /todos requests
+todosRouter.post("/", createTodo);

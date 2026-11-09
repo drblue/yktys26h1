@@ -8,6 +8,9 @@ const app = express();
 // Allow CORS from everyone
 app.use(cors());
 
+// Parse incoming JSON-bodies
+app.use(express.json());
+
 // Respond to GET / requests
 app.get("/", (_req, res) => {
 	res.json({ message: "Hello from Express!" });
