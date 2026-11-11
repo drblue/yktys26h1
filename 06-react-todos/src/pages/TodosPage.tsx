@@ -6,7 +6,6 @@ import { createTodo, getTodos, updateTodo } from "../services/TodoAPI";
 import type { Todo } from "../services/TodoAPI.types";
 import AddTodoForm from "../components/AddTodoForm";
 import TodoSummary from "../components/TodoSummary";
-import ErrorAlert from "../components/ErrorAlert";
 
 const TodosPage = () => {
 	const [error, setError] = useState<string | null>(null);

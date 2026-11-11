@@ -2,80 +2,8 @@
  * All communication with the backend REST-API (Express)
  */
 
-import axios from "axios";
-import type { APIErrorResult, APIResult, APISuccessResult, CreateTodoPayload, Todo, UpdateTodoPayload } from "./TodoAPI.types";
-
-const BASE_URL = "http://localhost:3001";
-
-// Create a new axios instance
-const http = axios.create({
-	baseURL: BASE_URL,
-	headers: {
-		"Accept": "application/json",
-	},
-	timeout: 10000,  // 10 seconds
-});
-
-/**
- * Build success-result
- */
-const success = <T>(data: T): APISuccessResult<T> => {
-	return {
-		status: "success",
-		data,  // data: data
-	}
-}
-
-/**
- * Build error-result
- */
-const error = (err: unknown): APIErrorResult => {
-	return {
-		status: "error",
-		message: (err instanceof Error)
-			? err.message
-			: "Something went wrong. Try again?",
-	}
-}
-
-/**
- * Make a generic HTTP GET request
- */
-const get = async <T>(endpoint: string): Promise<APIResult<T>> => {
-	try {
-		const res = await http.get<T>(endpoint);
-		return success(res.data);
-
-	} catch (err) {
-		return error(err);
-	}
-}
-
-/**
- * Make a generic HTTP POST request
- */
-const post = async <Response, Payload = unknown>(endpoint: string, payload: Payload): Promise<APIResult<Response>> => {
-	try {
-		const res = await http.post<Response>(endpoint, payload);
-		return success(res.data);
-
-	} catch (err) {
-		return error(err);
-	}
-}
-
-/**
- * Make a generic HTTP PATCH request
- */
-const patch = async <Response, Payload = unknown>(endpoint: string, payload: Payload): Promise<APIResult<Response>> => {
-	try {
-		const res = await http.patch<Response>(endpoint, payload);
-		return success(res.data);
-
-	} catch (err) {
-		return error(err);
-	}
-}
+import { BASE_URL, get, http, patch, post } from "./http";
+import type { CreateTodoPayload, Todo, UpdateTodoPayload } from "./TodoAPI.types";
 
 /**
  * Get a single todo from the API

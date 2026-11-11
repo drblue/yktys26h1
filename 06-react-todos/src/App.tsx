@@ -4,6 +4,7 @@ import Navigation from "./pages/partials/Navigation";
 import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import TodosPage from "./pages/TodosPage";
+import BooksPage from "./pages/BooksPage";
 import "./assets/scss/App.scss";
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
 						{/* /todos */}
 						<Route path="" element={<TodosPage />} />
 					</Route>
+
+					<Route path="/books" element={<BooksPage />} />
 
 					<Route path="*" element={<NotFoundPage />} />
 				</Routes>
