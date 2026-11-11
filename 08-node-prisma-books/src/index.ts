@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import { booksRouter } from "./routes/books.router.ts";
 import { todosRouter } from "./routes/todos.router.ts";
 
 const PORT = Number(process.env.PORT ?? 3001);
@@ -15,6 +16,9 @@ app.use(express.json());
 app.get("/", (_req, res) => {
 	res.json({ message: "Hello from Express!" });
 });
+
+// Use the books router
+app.use("/books", booksRouter);
 
 // Use the todos router
 app.use("/todos", todosRouter);
