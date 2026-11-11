@@ -3,3 +3,5 @@ export interface Book {
 	title: string;
 	pages: number;
 }
+
+export type CreateBookPayload = Pick<Book, "title" | "pages">;

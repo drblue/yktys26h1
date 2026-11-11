@@ -11,7 +11,7 @@ const BooksPage = () => {
 	const [books, setBooks] = useState<Book[] | null>(null);
 
 	const handleAddBook = (title: string, pages: string) => {
-		console.log({ title, pagesText: pages });
+		console.log({ title, pages });
 	}
 
 	useEffect(() => {
