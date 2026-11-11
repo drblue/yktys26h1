@@ -21,6 +21,10 @@ const AddBookForm = ({ onAdd }: AddBookFormProps) => {
 
 		// Tell the parent component that we want to create a new book
 		onAdd(inputTitle, pages);
+
+		// Clear input
+		setInputTitle("");
+		setPages("");
 	}
 
 	return (

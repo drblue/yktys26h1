@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Alert from "react-bootstrap/Alert";
 import ListGroup from "react-bootstrap/ListGroup";
-import { getBooks } from "../services/BooksAPI";
+import { createBook, getBooks } from "../services/BooksAPI";
 import type { Book } from "../services/BooksAPI.types";
 import AddBookForm from "../components/AddBookForm";
 
@@ -10,8 +10,24 @@ const BooksPage = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [books, setBooks] = useState<Book[] | null>(null);
 
-	const handleAddBook = (title: string, pages: string) => {
-		console.log({ title, pages });
+	const handleAddBook = async (title: string, pages: string) => {
+		// reset error-state
+		setError(null);
+
+		// Create book using API service
+		const result = await createBook({
+			title,
+			pages: Number(pages),
+		});
+
+		// If error, set error message and return
+		if (result.status === "error") {
+			setError(result.message);
+			return;
+		}
+
+		// If success, update books-state with the new book
+		setBooks(prevBooks => [...(prevBooks ?? []), result.data]);
 	}
 
 	useEffect(() => {
