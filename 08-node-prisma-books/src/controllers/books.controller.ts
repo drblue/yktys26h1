@@ -95,3 +95,19 @@ export const updateBook = async (req: Request, res: Response) => {
 
 	res.json(book);
 }
+
+export const deleteBook = async (req: Request, res: Response) => {
+	const id = Number(req.params.id);
+	if (!isValidId(id)) {
+		res.status(400).json({ message: "Expected a positive integer ID." });
+		return;
+	}
+
+	const deleteResult = await booksService.deleteBook(id);
+	if (!deleteResult) {
+		res.status(404).json({ message: "Book not found" });
+		return;
+	}
+
+	res.status(204).send();
+}

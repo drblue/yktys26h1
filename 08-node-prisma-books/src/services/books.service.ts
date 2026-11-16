@@ -42,3 +42,18 @@ export const updateBook = async (id: number, payload: UpdateBookPayload) => {
 		throw err;
 	}
 }
+
+export const deleteBook = async (id: number) => {
+	try {
+		await prisma.book.delete({
+			where: { id },
+		});
+		return true;
+	} catch (err) {
+		if (isRecordNotFound(err)) {
+			return false;
+		}
+
+		throw err;
+	}
+}

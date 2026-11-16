@@ -1,5 +1,5 @@
 import express from "express";
-import { createBook, getBooks, updateBook } from "../controllers/books.controller.ts";
+import { createBook, deleteBook, getBooks, updateBook } from "../controllers/books.controller.ts";
 
 export const booksRouter = express.Router();
 
@@ -11,3 +11,6 @@ booksRouter.post("/", createBook);
 
 // PATCH /books/:id
 booksRouter.patch("/:id", updateBook);
+
+// DELETE /books/:id
+booksRouter.delete("/:id", deleteBook);
