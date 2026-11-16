@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
-import { createBook, getBooks } from "../services/BooksAPI";
+import { createBook, deleteBook, getBooks } from "../services/BooksAPI";
 import type { Book } from "../services/BooksAPI.types";
 import AddBookForm from "../components/AddBookForm";
 
 const BooksPage = () => {
 	const [error, setError] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
+	const [isDeleting, setIsDeleting] = useState(false);
 	const [books, setBooks] = useState<Book[] | null>(null);
 
 	const handleAddBook = async (title: string, pages: string) => {
@@ -28,6 +30,21 @@ const BooksPage = () => {
 
 		// If success, update books-state with the new book
 		setBooks(prevBooks => [...(prevBooks ?? []), result.data]);
+	}
+
+	const handleDeleteBook = async (id: number) => {
+		setError(null);
+		setIsDeleting(true);
+
+		const result = await deleteBook(id);
+		if (result.status === "error") {
+			setError(result.message);
+			setIsDeleting(false);
+			return;
+		}
+
+		setBooks(prevBooks => (prevBooks ?? []).filter(book => book.id !== id));
+		setIsDeleting(false);
 	}
 
 	useEffect(() => {
@@ -77,8 +94,14 @@ const BooksPage = () => {
 			{books && books.length > 0 && (
 				<ListGroup className="mb-2" as="ul">
 					{books.map(book => (
-						<ListGroup.Item as="li" key={book.id}>
-							<span>{book.title}</span> ({book.pages} pages)
+						<ListGroup.Item as="li" key={book.id} className="d-flex justify-content-between">
+							<span>{book.title} ({book.pages} pages)</span>
+							<Button
+								disabled={isDeleting}
+								onClick={() => handleDeleteBook(book.id)}
+								size="sm"
+								variant="danger"
+							>Delete</Button>
 						</ListGroup.Item>
 					))}
 				</ListGroup>

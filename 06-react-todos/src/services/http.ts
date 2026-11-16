@@ -85,3 +85,16 @@ export const patch = async <Response, Payload = unknown>(endpoint: string, paylo
 		return error(err);
 	}
 }
+
+/**
+ * Make a generic HTTP DELETE request
+ */
+export const destroy = async (endpoint: string): Promise<APIResult<void>> => {
+	try {
+		await http.delete(endpoint);
+		return success(undefined);
+
+	} catch (err) {
+		return error(err);
+	}
+}
