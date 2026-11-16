@@ -13,8 +13,12 @@ app.use(cors());
 app.use(express.json());
 
 // Respond to GET / requests
-app.get("/", (_req, res) => {
-	res.json({ message: "Hello from Express!" });
+app.get("/", (req, res) => {
+	const message = req.query.lang === "sv"
+		? "Hej från Äxpräss!"
+		: "Hello from Express!";
+
+	res.json({ message });
 });
 
 // Use the books router
