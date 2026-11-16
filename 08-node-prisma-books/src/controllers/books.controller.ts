@@ -29,6 +29,22 @@ export const getBooks = async (_req: Request, res: Response) => {
 	res.json(books);
 }
 
+export const getBook = async (req: Request, res: Response) => {
+	const id = Number(req.params.id);
+	if (!isValidId(id)) {
+		res.status(400).json({ message: "Expected a positive integer ID." });
+		return;
+	}
+
+	const book = await booksService.getBook(id);
+	if (!book) {
+		res.status(404).json({ message: "Book not found" });
+		return;
+	}
+
+	res.json(book);
+}
+
 export const createBook = async (req: Request, res: Response) => {
 	const body: unknown = req.body;
 

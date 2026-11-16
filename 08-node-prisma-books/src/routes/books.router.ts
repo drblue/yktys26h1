@@ -1,10 +1,13 @@
 import express from "express";
-import { createBook, deleteBook, getBooks, updateBook } from "../controllers/books.controller.ts";
+import { createBook, deleteBook, getBook, getBooks, updateBook } from "../controllers/books.controller.ts";
 
 export const booksRouter = express.Router();
 
 // GET /books
 booksRouter.get("/", getBooks);
+
+// GET /book
+booksRouter.get("/:id", getBook);
 
 // POST /books
 booksRouter.post("/", createBook);

@@ -21,6 +21,13 @@ export const getBooks = async () => {
 	});
 }
 
+export const getBook = async (id: number) => {
+	return await prisma.book.findUnique({
+		where: { id },
+		select: bookSelect,
+	});
+}
+
 export const createBook = async (payload: CreateBookPayload) => {
 	return await prisma.book.create({
 		data: payload,
