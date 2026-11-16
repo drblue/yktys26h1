@@ -33,6 +33,7 @@ export const updateBook = async (id: number, payload: UpdateBookPayload) => {
 		return await prisma.book.update({
 			where: { id },
 			data: payload,
+			select: bookSelect,
 		});
 	} catch (err) {
 		if (isRecordNotFound(err)) {
