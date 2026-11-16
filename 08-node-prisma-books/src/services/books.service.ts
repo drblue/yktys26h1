@@ -1,5 +1,13 @@
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { prisma } from "../lib/prisma.ts"
-import type { CreateBookPayload } from "../types/Book.types.ts";
+import type { CreateBookPayload, UpdateBookPayload } from "../types/Book.types.ts";
+
+const isRecordNotFound = (err: unknown) => {
+	return (
+		err instanceof PrismaClientKnownRequestError &&
+		err.code === "P2025"
+	);
+}
 
 const bookSelect = {
 	id: true,
@@ -18,4 +26,19 @@ export const createBook = async (payload: CreateBookPayload) => {
 		data: payload,
 		select: bookSelect,
 	});
+}
+
+export const updateBook = async (id: number, payload: UpdateBookPayload) => {
+	try {
+		return await prisma.book.update({
+			where: { id },
+			data: payload,
+		});
+	} catch (err) {
+		if (isRecordNotFound(err)) {
+			return null;
+		}
+
+		throw err;
+	}
 }

@@ -1,5 +1,5 @@
 import express from "express";
-import { createBook, getBooks } from "../controllers/books.controller.ts";
+import { createBook, getBooks, updateBook } from "../controllers/books.controller.ts";
 
 export const booksRouter = express.Router();
 
@@ -8,3 +8,6 @@ booksRouter.get("/", getBooks);
 
 // POST /books
 booksRouter.post("/", createBook);
+
+// PATCH /books/:id
+booksRouter.patch("/:id", updateBook);
