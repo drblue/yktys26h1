@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "oxlint",
+    "check": "tsc -b",
+    "lint": "oxlint --type-aware --deny-warnings src",
+    "quality": "npm run lint && npm run check && npm run type-coverage && npm run build",
+    "type-coverage": "type-coverage --project tsconfig.app.json --detail --at-least 99",
     "preview": "vite preview",
     "server": "json-server --watch data/db.json --port 3000 --delay 2000"
   },
@@ -24,12 +27,20 @@
     "@vitejs/plugin-react": "^6.1.2",
     "bootstrap": "^5.3.8",
     "json-server": "^0.17.4",
-    "oxlint": "^1.89.0",
+    "oxlint": "1.94.0",
+    "oxlint-tsgolint": "7.0.2007",
     "sass": "1.77.6",
+    "type-coverage": "2.31.2",
     "typescript": "~7.0.2",
     "vite": "^8.3.5"
   },
   "allowScripts": {
     "fsevents@2.3.3": true
+  },
+  "overrides": {
+    "type-coverage-core": {
+      "typescript": "npm:@typescript/typescript6@6.0.2",
+      "minimatch": "11.0.1"
+    }
   }
 }
