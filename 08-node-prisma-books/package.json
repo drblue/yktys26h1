@@ -5,9 +5,12 @@
 	"scripts": {
 		"build": "tsc",
 		"check": "tsc --noEmit",
+		"lint": "oxlint --type-aware --deny-warnings src",
+		"quality": "npm run lint && npm run check && npm run type-coverage && npm run build",
 		"dev": "tsx --watch src/index.ts",
 		"start": "node dist/index.js",
-		"db:setup": "prisma generate && prisma migrate deploy && prisma db seed"
+		"db:setup": "prisma generate && tsx prisma/prepare-db.ts && prisma migrate deploy && prisma db seed",
+		"type-coverage": "type-coverage --project tsconfig.json --detail --at-least 99"
 	},
 	"keywords": [],
 	"author": "",
@@ -30,7 +33,10 @@
 		"typescript": "^7.0.2",
 		"@types/react": "19.3.0",
 		"@types/react-dom": "19.3.0",
+		"oxlint": "1.94.0",
+		"oxlint-tsgolint": "7.0.2007",
 		"prisma": "^7.8.0",
+		"type-coverage": "2.31.2",
 		"vite": "8.3.5"
 	},
 	"allowScripts": {
@@ -40,5 +46,16 @@
 		"better-sqlite3@12.11.1": true,
 		"@prisma/engines@7.10.1": true,
 		"prisma@7.10.1": true
+	},
+	"overrides": {
+		"type-coverage-core": {
+			"typescript": "npm:@typescript/typescript6@6.0.2",
+			"minimatch": "11.0.1"
+		}
+	},
+	"typeCoverage": {
+		"ignoreFiles": [
+			"src/generated/**"
+		]
 	}
 }
