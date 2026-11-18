@@ -31,7 +31,7 @@ export const getTodo = async (req: Request<{ id: string }>, res: Response) => {
 }
 
 // Create a new todo
-export const createTodo = async (req: Request, res: Response) => {
+export const createTodo = async (req: Request<unknown, unknown, unknown>, res: Response) => {
 	console.log("todos-controller createTodo");
 	console.log("body:", req.body);
 

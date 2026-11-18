@@ -45,7 +45,7 @@ export const getBook = async (req: Request, res: Response) => {
 	res.json(book);
 }
 
-export const createBook = async (req: Request, res: Response) => {
+export const createBook = async (req: Request<unknown, unknown, unknown>, res: Response) => {
 	const body: unknown = req.body;
 
 	if (!isCreateBookPayload(body)) {
@@ -70,7 +70,7 @@ export const createBook = async (req: Request, res: Response) => {
 	res.status(201).json(book);
 }
 
-export const updateBook = async (req: Request, res: Response) => {
+export const updateBook = async (req: Request<{ id: string }, unknown, unknown>, res: Response) => {
 	const id = Number(req.params.id);
 	if (!isValidId(id)) {
 		res.status(400).json({ message: "Expected a positive integer ID." });
