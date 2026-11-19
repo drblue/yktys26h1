@@ -1,4 +1,5 @@
 import type { Request, Response } from "express";
+import { isUpdateBookPayload } from "../guards/isUpdateBookPayload.ts";
 import * as booksService from "../services/books.service.ts";
 import type { CreateBookPayload, UpdateBookPayload } from "../types/Book.types.ts";
 
@@ -7,15 +8,6 @@ const isCreateBookPayload = (body: unknown): body is CreateBookPayload => {
 		typeof body === "object" && body !== null &&
 		"title" in body && typeof body.title === "string" &&
 		"pages" in body && typeof body.pages === "number"
-	)
-}
-
-const isUpdateBookPayload = (body: unknown): body is UpdateBookPayload => {
-	return (
-		typeof body === "object" && body !== null &&
-		("title" in body || "pages" in body) &&
-		(!("title" in body) || typeof body.title === "string") &&
-		(!("pages" in body) || typeof body.pages === "number")
 	)
 }
 
