@@ -5,6 +5,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { createBook, deleteBook, getBooks } from "../services/BooksAPI";
 import type { Book } from "../services/BooksAPI.types";
 import AddBookForm from "../components/AddBookForm";
+import { getReadingDays } from "../utils/getReadingDays";
 
 const BooksPage = () => {
 	const [error, setError] = useState<string | null>(null);
@@ -95,7 +96,7 @@ const BooksPage = () => {
 				<ListGroup className="mb-2" as="ul">
 					{books.map(book => (
 						<ListGroup.Item as="li" key={book.id} className="d-flex justify-content-between">
-							<span>{book.title} ({book.pages} pages)</span>
+							<span>{book.title} ({book.pages} pages) - Reading days: {getReadingDays(book.pages)}</span>
 							<Button
 								disabled={isDeleting}
 								onClick={() => handleDeleteBook(book.id)}
