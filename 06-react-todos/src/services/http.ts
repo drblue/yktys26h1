@@ -38,7 +38,17 @@ const success = <T>(data: T): APISuccessResult<T> => {
 /**
  * Build error-result
  */
+const hasErrorMessage = (data: unknown): data is { message: string } => {
+	return typeof data === "object" && data !== null &&
+		"message" in data && typeof data.message === "string" &&
+		data.message.trim().length > 0;
+}
+
 const error = (err: unknown): APIErrorResult => {
+	if (axios.isAxiosError(err) && hasErrorMessage(err.response?.data)) {
+		return { status: "error", message: err.response.data.message };
+	}
+
 	return {
 		status: "error",
 		message: (err instanceof Error)
