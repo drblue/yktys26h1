@@ -26,11 +26,12 @@ const BooksPage = () => {
 		// If error, set error message and return
 		if (result.status === "error") {
 			setError(result.message);
-			return;
+			return false;
 		}
 
 		// If success, update books-state with the new book
 		setBooks(prevBooks => [...(prevBooks ?? []), result.data]);
+		return true;
 	}
 
 	const handleDeleteBook = async (id: number) => {

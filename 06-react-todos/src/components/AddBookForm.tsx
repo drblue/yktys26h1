@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 
 interface AddBookFormProps {
-	onAdd: (title: string, pages: string) => void;
+	onAdd: (title: string, pages: string) => Promise<boolean>;
 }
 
 const AddBookForm = ({ onAdd }: AddBookFormProps) => {
@@ -12,7 +12,7 @@ const AddBookForm = ({ onAdd }: AddBookFormProps) => {
 	const [pages, setPages] = useState("");
 	const canSubmit = inputTitle.length > 0 && pages !== "";
 
-	const handleSubmit = (e: React.SubmitEvent) => {
+	const handleSubmit = async (e: React.SubmitEvent) => {
 		e.preventDefault();
 
 		if (!canSubmit) {
@@ -20,11 +20,13 @@ const AddBookForm = ({ onAdd }: AddBookFormProps) => {
 		}
 
 		// Tell the parent component that we want to create a new book
-		onAdd(inputTitle, pages);
+		const saved = await onAdd(inputTitle, pages);
 
-		// Clear input
-		setInputTitle("");
-		setPages("");
+		// Clear input (only if it was actually created)
+		if (saved) {
+			setInputTitle("");
+			setPages("");
+		}
 	}
 
 	return (
