@@ -25,3 +25,15 @@ test("rejects a title sent as a number", () => {
 test("rejects a page count sent as a text", () => {
 	assert.equal(isUpdateBookPayload({ pages: "240" }), false);
 });
+
+test("rejects an update with an empty object", () => {
+	assert.equal(isUpdateBookPayload({}), false);
+});
+
+test("rejects an update with no body", () => {
+	assert.equal(isUpdateBookPayload(null), false);
+});
+
+test("rejects an update with plain text", () => {
+	assert.equal(isUpdateBookPayload("Dune"), false);
+});
