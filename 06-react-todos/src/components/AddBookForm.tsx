@@ -10,14 +10,17 @@ interface AddBookFormProps {
 const AddBookForm = ({ onAdd }: AddBookFormProps) => {
 	const [inputTitle, setInputTitle] = useState("");
 	const [pages, setPages] = useState("");
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const canSubmit = inputTitle.length > 0 && pages !== "";
 
 	const handleSubmit = async (e: React.SubmitEvent) => {
 		e.preventDefault();
 
-		if (!canSubmit) {
+		if (!canSubmit || isSubmitting) {
 			return;
 		}
+
+		setIsSubmitting(true);
 
 		// Tell the parent component that we want to create a new book
 		const saved = await onAdd(inputTitle, pages);
@@ -27,6 +30,8 @@ const AddBookForm = ({ onAdd }: AddBookFormProps) => {
 			setInputTitle("");
 			setPages("");
 		}
+
+		setIsSubmitting(false);
 	}
 
 	return (
@@ -37,6 +42,7 @@ const AddBookForm = ({ onAdd }: AddBookFormProps) => {
 					onChange={e => setInputTitle(e.target.value)}
 					placeholder="Book title"
 					value={inputTitle}
+					disabled={isSubmitting}
 					required
 				/>
 				<InputGroup.Text>{inputTitle.length} chars</InputGroup.Text>
@@ -47,10 +53,11 @@ const AddBookForm = ({ onAdd }: AddBookFormProps) => {
 					onChange={e => setPages(e.target.value)}
 					placeholder="Pages"
 					value={pages}
+					disabled={isSubmitting}
 					required
 				/>
 				<Button
-					disabled={!canSubmit}
+					disabled={!canSubmit || isSubmitting}
 					type="submit"
 					variant="success"
 				>Create</Button>

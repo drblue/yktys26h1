@@ -16,6 +16,7 @@ export const getBooks = async () => {
  * Create book in API using axios
  */
 export const createBook = async (payload: CreateBookPayload) => {
+	await new Promise(r => setTimeout(r, 3000));
 	return post<Book>("/books", payload);
 }
 
