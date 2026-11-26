@@ -2,6 +2,7 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import { MIN_TITLE_LENGTH } from "../config/constants";
 
 interface AddTodoFormProps {
 	onAdd: (title: string) => void;
@@ -15,7 +16,7 @@ const AddTodoForm = ({ onAdd }: AddTodoFormProps) => {
 		e.preventDefault();
 		console.log(`Will create todo with title '${trimmedTitle}'`);
 
-		if (trimmedTitle.length < 3) {
+		if (trimmedTitle.length < MIN_TITLE_LENGTH) {
 			return;
 		}
 
@@ -39,7 +40,7 @@ const AddTodoForm = ({ onAdd }: AddTodoFormProps) => {
 				/>
 				<InputGroup.Text>{trimmedTitle.length} chars</InputGroup.Text>
 				<Button
-					disabled={trimmedTitle.length < 3}
+					disabled={trimmedTitle.length < MIN_TITLE_LENGTH}
 					type="submit"
 					variant="success"
 				>Create</Button>
