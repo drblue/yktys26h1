@@ -2,9 +2,10 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import type { CreateBookPayload } from "../services/BooksAPI.types";
 
 interface AddBookFormProps {
-	onAdd: (title: string, pages: string) => Promise<boolean>;
+	onAdd: (payload: CreateBookPayload) => Promise<boolean>;
 }
 
 const AddBookForm = ({ onAdd }: AddBookFormProps) => {
@@ -23,7 +24,10 @@ const AddBookForm = ({ onAdd }: AddBookFormProps) => {
 		setIsSubmitting(true);
 
 		// Tell the parent component that we want to create a new book
-		const saved = await onAdd(inputTitle, pages);
+		const saved = await onAdd({
+			pages: Number(pages),
+			title: inputTitle,
+		});
 
 		// Clear input (only if it was actually created)
 		if (saved) {

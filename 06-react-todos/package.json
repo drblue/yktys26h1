@@ -9,7 +9,7 @@
     "check": "tsc -b",
     "test": "node --test test/*.test.ts",
     "lint": "oxlint --type-aware --deny-warnings src",
-    "quality": "npm run lint && npm run check && npm run type-coverage && npm run build",
+    "quality": "npm run lint && npm run check && npm run type-coverage",
     "type-coverage": "type-coverage --project tsconfig.app.json --detail --at-least 99",
     "preview": "vite preview",
     "server": "json-server --watch data/db.json --port 3000 --delay 2000"

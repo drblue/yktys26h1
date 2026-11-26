@@ -3,7 +3,7 @@ import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 import { createBook, deleteBook, getBooks } from "../services/BooksAPI";
-import type { Book } from "../services/BooksAPI.types";
+import type { Book, CreateBookPayload } from "../services/BooksAPI.types";
 import AddBookForm from "../components/AddBookForm";
 import { getReadingDays } from "../utils/getReadingDays";
 
@@ -13,15 +13,12 @@ const BooksPage = () => {
 	const [isDeleting, setIsDeleting] = useState(false);
 	const [books, setBooks] = useState<Book[] | null>(null);
 
-	const handleAddBook = async (title: string, pages: string) => {
+	const handleAddBook = async (payload: CreateBookPayload) => {
 		// reset error-state
 		setError(null);
 
 		// Create book using API service
-		const result = await createBook({
-			title,
-			pages: Number(pages),
-		});
+		const result = await createBook(payload);
 
 		// If error, set error message and return
 		if (result.status === "error") {
