@@ -6,6 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "check": "tsc -b",
+    "lint": "oxlint --type-aware --deny-warnings src",
+    "quality": "npm run lint && npm run check && npm run type-coverage",
+    "type-coverage": "type-coverage --project tsconfig.json --detail --at-least 99",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -13,11 +17,20 @@
   },
   "devDependencies": {
     "bootstrap": "^5.3.8",
+    "oxlint": "1.94.0",
+    "oxlint-tsgolint": "7.0.2007",
     "sass": "1.77.6",
+    "type-coverage": "2.31.2",
     "typescript": "~6.0.2",
     "vite": "^8.3.0"
   },
   "allowScripts": {
     "fsevents@2.3.3": true
+  },
+  "overrides": {
+    "type-coverage-core": {
+      "typescript": "npm:@typescript/typescript6@6.0.2",
+      "minimatch": "11.0.1"
+    }
   }
 }

@@ -1,0 +1,1 @@
+{"root":["./src/main.ts","./src/vite-env.d.ts","./src/services/owmapi.ts","./src/services/owmapi.types.ts"],"version":"6.0.3"}
